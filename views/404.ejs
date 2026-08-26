@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Page Not Found - Cognifyz Task 1</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <header>
+      <span class="badge" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: #fbbf24;">
+        HTTP Status 404
+      </span>
+      <h1>404 - Page Not Found</h1>
+    </header>
+
+    <main>
+      <section class="card" style="text-align: center;">
+        
+        <div style="margin-bottom: 24px;">
+          <h2 style="font-size: 3.5rem; background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">
+            404
+          </h2>
+          <h2>Oops! Path Not Found</h2>
+          <p class="subtitle" style="margin-top: 8px;">The page or route you requested does not exist on this server.</p>
+        </div>
+
+        <div class="action-bar">
+          <a href="/" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to Homepage</span>
+          </a>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> Cognifyz IT Solutions.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

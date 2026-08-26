@@ -1,0 +1,25 @@
+{
+  "name": "task-1-express-ejs-form",
+  "version": "1.0.0",
+  "description": "Task 1 - HTML Structure and Basic Server Interaction using Express.js and EJS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "ejs",
+    "html5",
+    "css3",
+    "nodejs",
+    "fullstack",
+    "beginner-friendly"
+  ],
+  "author": "Cognifyz IT Solutions Intern",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.19.2"
+  }
+}
