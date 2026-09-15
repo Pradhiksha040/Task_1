@@ -1,0 +1,43 @@
+<!-- Task 6 JWT Authentication Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title fw-bold" id="loginModalLabel">
+          <i class="bi bi-box-arrow-in-right text-primary me-2"></i> User Login (Task 6 Auth)
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="loginAlert" class="alert alert-danger" style="display: none;" role="alert"></div>
+
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label text-muted">Email Address</label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-envelope"></i></span>
+              <input type="email" class="form-control bg-dark border-secondary text-light" id="loginEmail" placeholder="admin@example.com" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label text-muted">Password</label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-lock"></i></span>
+              <input type="password" class="form-control bg-dark border-secondary text-light" id="loginPassword" placeholder="••••••••" required>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="form-check">
+              <input class="form-check-input bg-dark border-secondary" type="checkbox" id="rememberMe">
+              <label class="form-check-label text-muted small" for="rememberMe">Remember me</label>
+            </div>
+            <a href="/register" class="text-primary small text-decoration-none nav-link-custom" data-link="/register" data-bs-dismiss="modal">Need an account?</a>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 rounded-pill shadow fw-semibold" id="loginSubmitBtn">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Authenticate & Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

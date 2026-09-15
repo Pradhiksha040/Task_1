@@ -1,138 +1,148 @@
-# Task 1: HTML Structure and Basic Server Interaction
+# Cognifyz IT Solutions — Tasks 1 to 8 Progressive Full Stack Application
 
-A beginner-friendly full-stack web application built for **Cognifyz IT Solutions Internship (Task 1)**. This project introduces core web development concepts including semantic HTML5 structure, form handling, Node.js + Express backend setup, HTTP GET/POST endpoints, form validation, and Server-Side Rendering (SSR) using EJS templates.
+An enterprise-grade, beginner-friendly full-stack web application developed for **Cognifyz IT Solutions Internship (Tasks 1 through 8)**. Built progressively using **Node.js, Express.js, EJS, Bootstrap 5, MongoDB / Mongoose, JWT Authentication, Rate Limiting, External Weather API Proxy, Background Job Queues, and Server-Side Caching**.
 
----
-
-## 📌 Project Objective
-
-The primary objective of Task 1 is to understand how client-side user input flows through an HTTP POST request to a backend Express server and returns dynamically rendered HTML content back to the browser using EJS (Embedded JavaScript) templates.
+GitHub Repository: [https://github.com/Pradhiksha040/Task_1](https://github.com/Pradhiksha040/Task_1)
 
 ---
 
-## 🛠️ Technologies Used
+## 🚀 Tasks Overview & Implemented Features
 
-- **HTML5**: Semantic web page markup (`<header>`, `<main>`, `<section>`, `<form>`, `<label>`, `<input>`, `<textarea>`, `<button>`, `<footer>`).
-- **CSS3**: Responsive flexbox layout, custom CSS properties, modern glassmorphism styling, and interactive hover states.
-- **JavaScript (ES6+)**: Node.js backend logic and async execution.
-- **Node.js**: Server runtime environment.
-- **Express.js**: Fast, unopinionated web framework for Node.js routing and middleware handling.
-- **EJS (Embedded JavaScript)**: Server-side templating engine for generating dynamic HTML pages.
+### Task 1: HTML Structure & Basic Server Interaction
+- **Semantic HTML5 Markup**: Form structure with input fields, labels, semantic `<header>`, `<main>`, `<section>`, and `<footer>`.
+- **Express Backend & EJS**: `POST /submit` handling URL-encoded payloads with Server-Side Rendering (`views/result.ejs`).
+
+### Task 2: Inline Styles, Interaction & Server-Side Validation
+- **Complex Form**: Fields for Full Name, Email, Phone Number, Date of Birth, Gender, Address, City, Password, Confirm Password, Terms checkbox.
+- **Client & Server Validation**: Inline JavaScript error messages (`public/js/validation.js`) combined with independent `express-validator` rules (`middleware/validate.js`).
+- **Temporary Server Storage**: In-memory store (`config/tempStore.js`) with endpoint `GET /api/temp-submissions`.
+
+### Task 3: Advanced CSS Styling & Responsive Design
+- **Bootstrap 5 & Glassmorphic Dark Theme**: Layered glassmorphism design system (`public/style.css`) with cards, gradients, and hover transitions.
+- **Responsive Layout**: Designed for Desktop (> 992px), Tablet (576px – 992px), and Mobile (< 576px).
+
+### Task 4: Complex Form Validation & Dynamic DOM Manipulation
+- **Password Strength Calculator**: Live strength meter checking length, uppercase, lowercase, numbers, and special symbols with visual color bars.
+- **Dynamic Interactions**: Password show/hide toggle, live character counter for Address, and Single Page Application (SPA) PushState client routing (`public/js/router.js`).
+
+### Task 5: REST API Integration & Frontend Interaction
+- **RESTful Endpoints**: Full CRUD endpoints (`GET`, `POST`, `PUT`, `DELETE` `/api/users`).
+- **AJAX Fetch Integration**: Dynamic CRUD operations without full page reloads, edit modals, and loading states.
+
+### Task 6: Database Integration & Authentication
+- **Mongoose User Schema**: MongoDB schema (`models/User.js`) with pre-save `bcryptjs` password hashing.
+- **JWT Auth & Authorization**: JSON Web Token issuance (`POST /api/auth/register`, `POST /api/auth/login`) with `middleware/auth.js`.
+
+### Task 7: Advanced API & External API Integration
+- **External Weather Proxy**: `GET /api/external/weather` proxying live public data from Open-Meteo REST API.
+- **OAuth 2.0 Concept**: Interactive visual simulation modal detailing Authorization Code & Access Token flow.
+- **Rate Limiting**: `express-rate-limit` returning HTTP 429 upon request excess.
+
+### Task 8: Advanced Server-Side Functionality
+- **Request Logging**: Middleware (`middleware/logger.js`) logging `[TIMESTAMP] METHOD URL STATUS DURATION_MS`.
+- **Background Jobs**: Asynchronous job queue (`services/jobQueue.js`) processing welcome email simulations, queryable via `GET /api/jobs/:id`.
+- **Response Caching**: Server-side caching (`config/redis.js`) for `GET /api/users` with automatic cache invalidation upon mutations.
 
 ---
 
-## 📁 Project Structure
+## 📁 Repository Folder Structure
 
 ```text
-project/
-├── public/
-│   └── style.css       # Custom stylesheet for glassmorphism card UI & responsive layout
+Task 1/
+├── config/
+│   ├── tempStore.js          # Task 2 temporary in-memory store
+│   ├── db.js                 # Task 6 MongoDB connection & fallback
+│   ├── redis.js              # Task 8 caching middleware
+│   └── rateLimiter.js        # Task 7 rate limiting rules
+├── middleware/
+│   ├── validate.js           # Server-side validation rules
+│   ├── logger.js             # Request duration logging
+│   ├── auth.js               # JWT authentication & authorization
+│   └── errorHandler.js       # Centralized API error handler
+├── models/
+│   └── User.js               # Mongoose schema with bcrypt hashing
+├── controllers/
+│   ├── tempController.js     # Task 2 temporary submission controller
+│   ├── authController.js     # Registration & login controller
+│   ├── userController.js     # REST API User CRUD controller
+│   └── externalController.js # External API & job status controller
+├── routes/
+│   ├── tempRoutes.js         # Temporary submission routes
+│   ├── authRoutes.js         # Authentication routes
+│   ├── userRoutes.js         # REST users API routes
+│   └── externalRoutes.js     # External proxy & job routes
+├── services/
+│   ├── jobQueue.js           # Background job queue & worker
+│   └── externalService.js    # External weather API client
 ├── views/
-│   ├── index.ejs       # Homepage template containing the contact form
-│   ├── result.ejs      # Result page template displaying submitted data dynamically
-│   ├── error.ejs       # Friendly error page for missing form data
-│   └── 404.ejs         # Custom 404 Not Found page for invalid routes
-├── .gitignore          # Git ignore rules for node_modules and temporary files
-├── package.json        # Node.json configuration, dependencies, and start scripts
-├── server.js           # Express server setup, middleware, and route handlers
-└── README.md           # Comprehensive project documentation
+│   ├── index.ejs             # Master EJS view
+│   ├── result.ejs            # Task 1 SSR result template
+│   ├── error.ejs             # Task 1 SSR error template
+│   ├── 404.ejs               # Custom 404 template
+│   └── partials/             # Reusable Bootstrap UI partials
+│       ├── navbar.ejs
+│       ├── hero.ejs
+│       ├── taskForm.ejs
+│       ├── userTable.ejs
+│       ├── externalApi.ejs
+│       ├── features.ejs
+│       └── loginModal.ejs
+├── public/
+│   ├── style.css             # Glassmorphism stylesheet & Bootstrap overrides
+│   └── js/
+│       ├── validation.js     # Inline validation & strength meter
+│       ├── router.js         # SPA client router
+│       ├── api.js            # REST API CRUD & Auth script
+│       └── oauthDemo.js      # Weather proxy & OAuth simulation script
+├── .env.example              # Environment configuration template
+├── server.js                 # Express server entry point
+├── package.json              # Project dependencies & scripts
+└── scratch/
+    └── test_all_tasks.js     # Automated test suite
 ```
 
 ---
 
-## ⚙️ How Express Works in This Project
+## ⚙️ Environment Variables (`.env`)
 
-Express.js serves as the HTTP web server. When a user requests a URL or submits a form in their browser, Express receives the HTTP request, processes it through middleware, executes the corresponding route handler, and sends back an HTTP response.
-
-In `server.js`, we configure three essential Express features:
-1. `express.urlencoded({ extended: true })`: Parses incoming form submissions and exposes data on `req.body`.
-2. `express.static('public')`: Serves static assets (such as `style.css`) directly to the browser.
-3. `app.set('view engine', 'ejs')`: Sets EJS as the view engine to compile and render `.ejs` files into plain HTML.
-
----
-
-## 🛣️ Route Breakdown
-
-### 1. `GET /`
-- **Purpose**: Displays the main page with the contact form.
-- **Flow**: When a user navigates to `http://localhost:3000/`, Express handles the request and calls `res.render('index')`. Express locates `views/index.ejs`, compiles it into HTML, and returns it to the browser.
-
-### 2. `POST /submit`
-- **Purpose**: Processes form input submitted by the user.
-- **Flow**:
-  1. The HTML form sends a `POST` request to `/submit` containing `name`, `email`, and `message` in the request body (`req.body`).
-  2. The server performs validation to ensure no required field is empty or whitespace-only.
-  3. If validation succeeds, Express calls `res.render('result', { name, email, message, submittedAt })`, passing the data to `result.ejs`.
-  4. If validation fails, Express renders `error.ejs` with HTTP status `400` without crashing the server.
-
----
-
-## 🖥️ What Server-Side Rendering (SSR) Means
-
-**Server-Side Rendering (SSR)** is a technique where HTML pages are generated dynamically on the server for each request rather than being constructed purely in the browser with client-side JavaScript.
-
-1. The browser requests a page or submits form data.
-2. The Node.js/Express server reads the template (`result.ejs`) and injects dynamic backend data into it.
-3. The server converts the EJS template into complete HTML.
-4. The server sends the fully formed HTML document back to the browser.
-
----
-
-## 🧩 Dynamic Data Display with EJS
-
-EJS allows embedding standard JavaScript logic directly within HTML files. In `result.ejs`, we use EJS output tags (`<%= %>`) to dynamically inject values received from `req.body`:
-
-```html
-<h2>Thank You, <%= name %>!</h2>
-<p>Email: <%= email %></p>
-<p>Message: <%= message %></p>
+```env
+PORT=3000
+NODE_ENV=development
+MONGO_URI=mongodb://127.0.0.1:27017/cognifyz_db
+JWT_SECRET=cognifyz_super_secret_jwt_key_2026_key
+REDIS_URL=redis://127.0.0.1:6379
 ```
 
-When Express executes `res.render('result', { name: "Alex", ... })`, EJS replaces `<%= name %>` with `"Alex"`, outputting `<h2>Thank You, Alex!</h2>`.
+---
+
+## 🚀 How to Run the Project
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the server:
+   ```bash
+   npm start
+   ```
+
+3. Open in browser:
+   ```text
+   http://localhost:3000
+   ```
 
 ---
 
-## 🚀 Installation & How to Run
+## 🧪 Automated Testing
 
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed (v14+ recommended).
-
-### 1. Install Dependencies
-Open your terminal in the project root directory and run:
-
+Run the automated test suite to verify all tasks (1 through 8):
 ```bash
-npm install
-```
-
-### 2. Start the Server
-Run the Express application using either of the following commands:
-
-```bash
-npm start
-```
-or
-```bash
-node server.js
-```
-
-### 3. Open in Browser
-Visit the following URL in your browser:
-```text
-http://localhost:3000
+node scratch/test_all_tasks.js
 ```
 
 ---
 
-## 🧪 Testing Checklist
+## 📜 License
 
-1. **Homepage Test**: Open `http://localhost:3000` and confirm the header, form fields (Name, Email, Message), and submit button load cleanly.
-2. **Valid Submission Test**: Fill out all form fields and click "Submit Data to Server". Verify that the page redirects to `/submit` and displays "Thank You, [Name]!" alongside the submitted details.
-3. **HTML Validation Test**: Try leaving a field empty or typing an invalid email format. HTML5 client-side validation should prompt you to correct the input.
-4. **Server Validation Test**: Submit an empty request via Postman or modified request. The server should gracefully display `views/error.ejs` without crashing.
-5. **404 Route Test**: Navigate to `http://localhost:3000/random-page` and verify the custom 404 error page renders cleanly.
-
----
-
-## 📜 License & Acknowledgments
-
-Created for **Cognifyz IT Solutions** Web Development Internship - Task 1.
+Created for **Cognifyz IT Solutions** Web Development Internship.

@@ -1,0 +1,42 @@
+<!-- Task 3 Responsive Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 nav-link-custom" href="/" data-link="/">
+      <div class="brand-logo">
+        <i class="bi bi-rocket-takeoff-fill"></i>
+      </div>
+      <span class="fw-bold tracking-tight">Cognifyz<span class="text-primary-gradient">LaunchPad</span></span>
+    </a>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-pills custom-pills">
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom active" href="/" data-link="/"><i class="bi bi-house-door me-1"></i> Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom" href="/register" data-link="/register"><i class="bi bi-person-plus me-1"></i> Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom" href="/users" data-link="/users"><i class="bi bi-people me-1"></i> Submissions & API</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom" href="/about" data-link="/about"><i class="bi bi-info-circle me-1"></i> About Tasks</a>
+        </li>
+      </ul>
+
+      <!-- User Auth Section / Status -->
+      <div class="d-flex align-items-center gap-2" id="authNavButtons">
+        <button class="btn btn-outline-light btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#loginModal">
+          <i class="bi bi-box-arrow-in-right me-1"></i> Login
+        </button>
+        <a href="/register" class="btn btn-primary btn-sm rounded-pill px-3 nav-link-custom" data-link="/register">
+          <i class="bi bi-person-add me-1"></i> Get Started
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,64 @@
+<!-- Task 7 OAuth 2.0 Demonstration Modal -->
+<div class="modal fade" id="oauthDemoModal" tabindex="-1" aria-labelledby="oauthDemoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title fw-bold" id="oauthDemoModalLabel">
+          <i class="bi bi-shield-check text-primary me-2"></i> OAuth 2.0 Authentication Flow & Architecture
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted small">
+          OAuth 2.0 is an open standard authorization framework that allows third-party applications to access user data securely without exposing user passwords.
+        </p>
+
+        <!-- Step-by-Step Flow Tabs -->
+        <div class="row g-3 my-3">
+          <div class="col-md-3">
+            <div class="p-3 border border-secondary rounded-3 bg-dark text-center h-100">
+              <span class="badge bg-primary rounded-circle mb-2">1</span>
+              <h6 class="fw-bold text-white mb-1">Authorization Request</h6>
+              <small class="text-muted d-block">Client directs user to Provider Login</small>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="p-3 border border-secondary rounded-3 bg-dark text-center h-100">
+              <span class="badge bg-info rounded-circle mb-2">2</span>
+              <h6 class="fw-bold text-white mb-1">Authorization Grant</h6>
+              <small class="text-muted d-block">User consents & receives Auth Code</small>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="p-3 border border-secondary rounded-3 bg-dark text-center h-100">
+              <span class="badge bg-warning text-dark rounded-circle mb-2">3</span>
+              <h6 class="fw-bold text-white mb-1">Token Exchange</h6>
+              <small class="text-muted d-block">Server exchanges code for Access Token</small>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="p-3 border border-secondary rounded-3 bg-dark text-center h-100">
+              <span class="badge bg-success rounded-circle mb-2">4</span>
+              <h6 class="fw-bold text-white mb-1">Protected API Access</h6>
+              <small class="text-muted d-block">Backend fetches user resource securely</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Simulation Output -->
+        <div class="border border-secondary rounded-3 p-3 bg-black">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="badge bg-outline-primary text-info"><i class="bi bi-terminal me-1"></i> OAuth 2.0 Live Token Simulation</span>
+            <button class="btn btn-sm btn-outline-success rounded-pill px-3" id="simulateOAuthBtn">
+              <i class="bi bi-play-fill me-1"></i> Run Simulation
+            </button>
+          </div>
+          <pre class="mb-0 text-success font-monospace small" id="oauthConsole" style="max-height: 200px; overflow-y: auto;">Click 'Run Simulation' to test OAuth Authorization Code & Access Token Grant...</pre>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

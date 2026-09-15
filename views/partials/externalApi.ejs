@@ -1,0 +1,55 @@
+<!-- Task 7 External API Integration & OAuth 2.0 Demonstration Partial -->
+<div class="card glass-card shadow-lg border-0 rounded-4 p-4 p-md-5 my-4" id="externalApiSection">
+  <div class="row g-4 align-items-center mb-4">
+    <div class="col-md-7">
+      <span class="badge bg-info-subtle text-info border border-info-subtle rounded-pill px-3 py-2 fw-semibold mb-2">
+        Task 7 Integration Hub
+      </span>
+      <h2 class="fw-bold text-white mb-2">Live Weather Proxy & OAuth 2.0 Flow</h2>
+      <p class="text-muted fs-6 mb-0">Demonstrating third-party external API consumption via backend proxy and interactive OAuth 2.0 token authorization concepts.</p>
+    </div>
+    <div class="col-md-5 text-md-end">
+      <button class="btn btn-outline-info rounded-pill px-3 me-2" id="fetchWeatherBtn">
+        <i class="bi bi-cloud-download me-1"></i> Fetch Live Weather
+      </button>
+      <button class="btn btn-primary rounded-pill px-3 shadow" data-bs-toggle="modal" data-bs-target="#oauthDemoModal">
+        <i class="bi bi-key-fill me-1"></i> View OAuth Demo
+      </button>
+    </div>
+  </div>
+
+  <!-- Weather Widget Box -->
+  <div class="weather-box bg-dark bg-opacity-75 border border-secondary rounded-4 p-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-geo-alt-fill text-danger fs-4"></i>
+        <h4 class="fw-bold text-white mb-0" id="weatherCityName">New York Weather Proxy</h4>
+      </div>
+      <span class="badge bg-primary" id="weatherTime">Live</span>
+    </div>
+
+    <div class="row g-3 text-center" id="weatherContent">
+      <div class="col-4">
+        <div class="p-3 border border-secondary rounded-3 bg-dark">
+          <i class="bi bi-thermometer-half text-warning fs-2"></i>
+          <h5 class="fw-bold text-white mt-2 mb-0" id="weatherTemp">-- °C</h5>
+          <small class="text-muted">Temperature</small>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="p-3 border border-secondary rounded-3 bg-dark">
+          <i class="bi bi-wind text-info fs-2"></i>
+          <h5 class="fw-bold text-white mt-2 mb-0" id="weatherWind">-- km/h</h5>
+          <small class="text-muted">Wind Speed</small>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="p-3 border border-secondary rounded-3 bg-dark">
+          <i class="bi bi-droplet-half text-primary fs-2"></i>
+          <h5 class="fw-bold text-white mt-2 mb-0" id="weatherCode">--</h5>
+          <small class="text-muted">Condition</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

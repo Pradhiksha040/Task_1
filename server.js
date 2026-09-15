@@ -1,102 +1,93 @@
 /**
  * ============================================================================
- * COGNIFYZ IT SOLUTIONS - TASK 1: HTML STRUCTURE & SERVER INTERACTION
+ * COGNIFYZ IT SOLUTIONS - TASKS 1 to 8 FULL STACK APPLICATION
  * ============================================================================
  * 
- * Tech Stack: Node.js, Express.js, EJS, HTML5, CSS3
- * Port: http://localhost:3000
+ * Tech Stack: Node.js, Express.js, EJS, Bootstrap 5, MongoDB / Mongoose, 
+ *             JWT Auth, express-validator, Rate Limiting, Redis Caching, 
+ *             Background Jobs, External Weather Proxy.
  * 
- * Key Concepts Covered in this File:
- * 1. Express Application Setup & Server Configuration
- * 2. Static File Middleware (express.static)
- * 3. Body Parser Middleware (express.urlencoded)
- * 4. View Engine Configuration (EJS)
- * 5. GET Route Handling (Rendering Templates)
- * 6. POST Route Handling & Form Validation
- * 7. Server-Side Rendering (SSR) with EJS variables
- * 8. Error Handling & 404 Route Catch-all
+ * Port: http://localhost:3000
  */
 
-// Import required core & third-party packages
+// Load Environment Variables from .env
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
-// Initialize the Express application
+// Internal Config & Database Modules
+const { connectDB } = require('./config/db');
+const { apiLimiter } = require('./config/rateLimiter');
+
+// Middleware Imports
+const requestLogger = require('./middleware/logger');
+const errorHandler = require('./middleware/errorHandler');
+
+// Route Handlers
+const tempRoutes = require('./routes/tempRoutes');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const externalRoutes = require('./routes/externalRoutes');
+
+// Initialize Express App
 const app = express();
-
-// Define the server port
 const PORT = process.env.PORT || 3000;
+
+// Initialize Database Connection
+connectDB();
 
 // ============================================================================
 // MIDDLEWARE CONFIGURATION
 // ============================================================================
 
-/**
- * 1. Body Parser Middleware
- * `express.urlencoded({ extended: true })` parses incoming requests with
- * URL-encoded payloads (i.e., data sent from HTML <form> submissions).
- * It attaches the parsed form data to `req.body`.
- */
+// 1. Task 8 HTTP Request Duration & Status Logger
+app.use(requestLogger);
+
+// 2. CORS & Security Policy
+app.use(cors());
+
+// 3. Body Parsing Middleware
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/**
- * 2. Static Files Middleware
- * `express.static('public')` serves static files such as CSS, images, and client JS
- * directly from the 'public' directory.
- */
+// 4. Serve Static Files (CSS, JS, Media)
 app.use(express.static(path.join(__dirname, 'public')));
 
-/**
- * 3. View Engine Configuration
- * Configure EJS (Embedded JavaScript) as the template rendering engine
- * and specify the directory where template views are located.
- */
+// 5. Template Engine Setup (EJS)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // ============================================================================
-// ROUTE HANDLERS
+// TASK 1 BACKWARDS COMPATIBILITY ROUTES
 // ============================================================================
 
 /**
  * GET /
- * Purpose: Renders the homepage containing the HTML form.
- * Response: Renders views/index.ejs
+ * Renders master layout containing Task 1 to Task 8 interactive sections
  */
 app.get('/', (req, res) => {
   res.render('index', { error: null });
 });
 
 /**
- * POST /submit
- * Purpose: Receives and processes the form submission.
- * Process:
- *  1. Extracts 'name', 'email', and 'message' from req.body.
- *  2. Performs server-side validation to ensure required fields are present.
- *  3. Dynamically renders views/result.ejs with the submitted data.
+ * POST /submit (Task 1 Form Route)
  */
 app.post('/submit', (req, res) => {
   const { name, email, message } = req.body;
 
-  // Server-Side Validation: Ensure no required field is empty or whitespace-only
   if (!name || !email || !message || name.trim() === '' || email.trim() === '' || message.trim() === '') {
-    // Render error page gracefully without crashing the server (HTTP 400 Bad Request)
     return res.status(400).render('error', {
       errorMessage: 'All fields (Name, Email, and Message) are required. Please fill out the entire form.'
     });
   }
 
-  // Format timestamp for display
   const submittedAt = new Date().toLocaleString('en-US', {
     dateStyle: 'medium',
     timeStyle: 'medium'
   });
 
-  /**
-   * Server-Side Rendering (SSR) with EJS:
-   * Pass the validated data variables to `result.ejs`.
-   * EJS will interpolate <%= name %>, <%= email %>, <%= message %>, and <%= submittedAt %>.
-   */
   res.render('result', {
     name: name.trim(),
     email: email.trim(),
@@ -106,32 +97,50 @@ app.post('/submit', (req, res) => {
 });
 
 // ============================================================================
+// TASK 2 – 8 API ROUTES & RATE LIMITING
+// ============================================================================
+
+// Apply Task 7 Rate Limiter to /api/ routes
+app.use('/api', apiLimiter);
+
+// Mount Modular API Routes
+app.use('/api', tempRoutes);       // Task 2: /api/temp-submit & /api/temp-submissions
+app.use('/api/auth', authRoutes);  // Task 6: /api/auth/register, /api/auth/login, /api/auth/logout
+app.use('/api/users', userRoutes); // Task 5 & 8: REST CRUD /api/users
+app.use('/api', externalRoutes);   // Task 7 & 8: /api/external/weather & /api/jobs/:id
+
+// ============================================================================
+// TASK 4 SPA CLIENT ROUTING FALLBACKS
+// Allows direct browser reloads on /register, /users, /external, /about
+// ============================================================================
+app.get(['/register', '/users', '/external', '/about'], (req, res) => {
+  res.render('index', { error: null });
+});
+
+// ============================================================================
 // ERROR & 404 HANDLERS
 // ============================================================================
 
-/**
- * Express 404 Handler
- * Catch-all middleware for any requested route that does not match GET / or POST /submit.
- */
+// Catch-all 404 Route
 app.use((req, res) => {
+  if (req.xhr || req.headers.accept?.includes('application/json') || req.path.startsWith('/api/')) {
+    return res.status(404).json({
+      success: false,
+      message: `HTTP 404 Not Found: Path '${req.originalUrl}' does not exist on this server.`
+    });
+  }
   res.status(404).render('404');
 });
 
-/**
- * Global Error Handler
- * Catches unhandled errors thrown anywhere in the server code to prevent crash.
- */
-app.use((err, req, res, next) => {
-  console.error('Server Internal Error:', err.stack);
-  res.status(500).send('Something broke on the server! Please try again later.');
-});
+// Centralized Error Handling Middleware
+app.use(errorHandler);
 
 // ============================================================================
 // START SERVER
 // ============================================================================
 app.listen(PORT, () => {
-  console.log(`===================================================`);
-  console.log(`🚀 Cognifyz Task 1 Server is running successfully!`);
-  console.log(`🌐 Local URL: http://localhost:${PORT}`);
-  console.log(`===================================================`);
+  console.log(`===========================================================`);
+  console.log(`🚀 Cognifyz Full Stack App (Tasks 1 - 8) is running!`);
+  console.log(`🌐 Local Server URL: http://localhost:${PORT}`);
+  console.log(`===========================================================`);
 });
